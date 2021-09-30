@@ -23,9 +23,12 @@ class Block {
     validate() {
         let self = this;
         return new Promise((resolve, reject) => {
-            if(self.hash === SHA256(JSON.stringify(self)).toString()) {
+            // NOTE: blockのhashが作られるのはhashがない状態の時なので確認する時はnullを設定しないといけない
+            if(self.hash === SHA256(JSON.stringify({ ...self, hash: null })).toString()) {
+                console.log("ok !!!!!")
                 resolve(true)
             } else {
+                console.log("not !!!!!")
                 reject(false)
             }
         });
